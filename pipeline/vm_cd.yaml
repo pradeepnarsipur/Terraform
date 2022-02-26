@@ -31,12 +31,10 @@ jobs:
       command: 'apply'
       workingDirectory: '$(System.DefaultWorkingDirectory)/scripts'
       environmentServiceNameAzureRM: 'Pay-As-You-Go(acf8be16-4029-4672-bd15-7c4aa64a5a8a)'
-      #to destroy
- - task: TerraformTaskV2@2
+  - task: TerraformTaskV2@2
     displayName: 'destroy'
     inputs:
       provider: 'azurerm'
-      command: 'destroy'
+      command: 'apply'
       workingDirectory: '$(System.DefaultWorkingDirectory)/scripts'
       environmentServiceNameAzureRM: 'Pay-As-You-Go(acf8be16-4029-4672-bd15-7c4aa64a5a8a)'
-
