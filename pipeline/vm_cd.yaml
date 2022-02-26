@@ -7,7 +7,8 @@ pool:
   vmImage: default
 
 steps:
-- task: Terraform_init
+- task: TerraformTaskV2@2
+displayName: 'terraform init'
   inputs:
     provider: 'azurerm'
     command: 'init'
@@ -17,7 +18,8 @@ steps:
     backendAzureRmStorageAccountName: 'pradeepstorageacctname'
     backendAzureRmContainerName: 'tstate'
     backendAzureRmKey: 'tts.tfstate'
-- task: Terraform_validate
+- task: TerraformTaskV2@2
+displayName: 'terraform plan'
   inputs:
     provider: 'azurerm'
     command: 'validate'
@@ -28,7 +30,8 @@ steps:
         command: 'plan'
         workingDirectory: 'https://github.com/pnarsipur1/azurelearning/tree/main/Infrastructrure/terraform/'
         environmentServiceNameAzureRM: 'Pay-As-You-Go(acf8be16-4029-4672-bd15-7c4aa64a5a8a)'
-- task: Terraform_apply
+- task: TerraformTaskV2@2
+displayName: 'terraform apply'
   inputs:
     provider: 'azurerm'
     command: 'apply'
