@@ -6,7 +6,7 @@ pool:
   vmImage: ubuntu-latest
 
 jobs:
-- job: infra-deploy
+- job: infra_deploy
   pool: windows-latest
   steps:
   - task: TerraformTaskV2@2
