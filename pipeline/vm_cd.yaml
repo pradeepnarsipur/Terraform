@@ -2,12 +2,9 @@
 trigger:
 - main
 
-pool: 
-  vmImage: ubuntu-latest
-
 jobs:
 - job: infra_deploy
-  pool: windows-latest
+  pool: default
   steps:
   - task: TerraformTaskV2@2
     displayName: 'init'
