@@ -1,0 +1,37 @@
+# vm creation through terraform
+
+trigger:
+- main
+
+#pool:
+ # vmImage: ubuntu-latest
+
+steps:
+- task: Terraform_init
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: 'https://github.com/pnarsipur1/azurelearning/tree/main/Infrastructrure/terraform/'
+    backendServiceArm: 'Pay-As-You-Go(acf8be16-4029-4672-bd15-7c4aa64a5a8a)'
+    backendAzureRmResourceGroupName: 'pradeepnp'
+    backendAzureRmStorageAccountName: 'pradeepstorageacctname'
+    backendAzureRmContainerName: 'tstate'
+    backendAzureRmKey: 'tts.tfstate'
+- task: Terraform_validate
+  inputs:
+    provider: 'azurerm'
+    command: 'validate'
+    workingDirectory: 'https://github.com/pnarsipur1/azurelearning/tree/main/Infrastructrure/terraform/'
+- task: Terraform_plan
+  inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        workingDirectory: 'https://github.com/pnarsipur1/azurelearning/tree/main/Infrastructrure/terraform/'
+        environmentServiceNameAzureRM: 'Pay-As-You-Go(acf8be16-4029-4672-bd15-7c4aa64a5a8a)'
+- task: Terraform_apply
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    workingDirectory: 'https://github.com/pnarsipur1/azurelearning/tree/main/Infrastructrure/terraform/'
+    environmentServiceNameAzureRM: 'Pay-As-You-Go(acf8be16-4029-4672-bd15-7c4aa64a5a8a)'
+
