@@ -21,7 +21,7 @@ jobs:
       backendAzureRmContainerName: 'tstate'
       backendAzureRmKey: 'tts.tfstate'
   - task: TerraformTaskV2@2
-     displayname: 'validate'
+    displayname: 'validate'
     inputs:
       provider: 'azurerm'
       command: 'validate'
@@ -32,7 +32,7 @@ jobs:
           workingDirectory: 'https://github.com/pnarsipur1/azurelearning/tree/main/Infrastructrure/terraform/'
           environmentServiceNameAzureRM: 'Pay-As-You-Go(acf8be16-4029-4672-bd15-7c4aa64a5a8a)'
   - task: TerraformTaskV2@2
-     displayname: 'apply'
+    displayname: 'apply'
     inputs:
       provider: 'azurerm'
       command: 'apply'
