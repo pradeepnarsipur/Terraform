@@ -7,10 +7,10 @@ jobs:
   pool: default
   steps:
   - task: TerraformTaskV2@2
-    displayName: 'init'
+    displayName: 'destroy'
     inputs:
       provider: 'azurerm'
-      command: 'init'
+      command: 'destroy'
       workingDirectory: '$(System.DefaultWorkingDirectory)/scripts'
       backendServiceArm: 'Pay-As-You-Go(acf8be16-4029-4672-bd15-7c4aa64a5a8a)'
       backendAzureRmResourceGroupName: 'rg-terraform'
