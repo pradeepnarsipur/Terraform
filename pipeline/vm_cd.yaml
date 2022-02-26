@@ -23,7 +23,7 @@ jobs:
   - task: TerraformTaskV2@2
     displayname: 'validate'
     inputs:
-    provider: 'azurerm'
+      provider: 'azurerm'
       command: 'plan'
       workingDirectory: 'https://github.com/pnarsipur1/azurelearning/tree/main/Infrastructrure/terraform/'
       environmentServiceNameAzureRM: 'Pay-As-You-Go(acf8be16-4029-4672-bd15-7c4aa64a5a8a)'
