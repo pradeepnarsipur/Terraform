@@ -3,7 +3,7 @@ trigger:
 - main
 
 jobs:
-- job: infra_deploy
+- job: infra_destroy
   pool: default
   steps:
   - task: TerraformTaskV2@2
@@ -18,9 +18,9 @@ jobs:
       backendAzureRmContainerName: 'tstate'
       backendAzureRmKey: 'tts.tfstate'
   - task: TerraformTaskV2@2
-    displayName: 'validate'
+    displayName: 'destroy'
     inputs:
       provider: 'azurerm'
-      command: 'plan'
+      command: 'destroy'
       workingDirectory: '$(System.DefaultWorkingDirectory)/scripts'
       environmentServiceNameAzureRM: 'Pay-As-You-Go(acf8be16-4029-4672-bd15-7c4aa64a5a8a)'
