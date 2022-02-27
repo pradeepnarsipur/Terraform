@@ -1,9 +1,9 @@
-# vm creation through terraform
+# vm destroy through terraform
 trigger:
 - main
 
 jobs:
-- job: infra_deploy
+- job: infra_destroy
   pool: default
   steps:
   - task: TerraformTaskV2@2
