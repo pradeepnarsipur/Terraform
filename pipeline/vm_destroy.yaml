@@ -17,3 +17,4 @@ jobs:
       backendAzureRmStorageAccountName: 'stterraformst'
       backendAzureRmContainerName: 'tstate'
       backendAzureRmKey: 'tts.tfstate'
+      environmentServiceNameAzureRM: 'Pay-As-You-Go(acf8be16-4029-4672-bd15-7c4aa64a5a8a)'
