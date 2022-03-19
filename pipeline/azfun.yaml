@@ -1,22 +1,37 @@
 trigger:
-- main
-
-variables:
-  # Azure service connection established during pipeline creation
-  azureSubscription: 'Pay-As-You-Go(acf8be16-4029-4672-bd15-7c4aa64a5a8a)'
-  appName: 'test-azure-functions_pradeep'
-  # Agent VM image name
-  #vmImageName: 'default'
-  pool: default
-
-- task: AzureFunctionApp@1 # Add this at the end of your file
+- master
+pool:
+  vmImage: 'default'
+steps:
+- task: TerraformTaskV1@0
+  displayName: Terra Init
   inputs:
-    azureSubscription: 'Pay-As-You-Go(acf8be16-4029-4672-bd15-7c4aa64a5a8a)'
-    appType: functionAppLinux # default is functionApp
-    appName: $(appName)
-    package: $(System.ArtifactsDirectory)/**/*.zip
-    #Uncomment the next lines to deploy to a deployment slot
-    #Note that deployment slots is not supported for Linux Dynamic SKU
-    #deployToSlotOrASE: true
-    #resourceGroupName: '<Resource Group Name>'
-    #slotName: '<Slot name>'
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: $(System.DefaultWorkingDirectory)
+    backendServiceArm: 'ServiceConnectionName'
+    backendAzureRmResourceGroupName: 'common-services-miel'
+    backendAzureRmStorageAccountName: 'mielstorage001'
+    backendAzureRmContainerName: 'configman'
+    backendAzureRmKey: 'tf/terraform.tfstate'
+- task: TerraformTaskV1@0
+  displayName: Terra Destroy
+  inputs:
+    provider: 'azurerm'
+    command: 'destroy'
+    workingDirectory: $(System.DefaultWorkingDirectory)
+    environmentServiceNameAzureRM: 'ServiceConnectionName'
+- task: TerraformTaskV1@0
+  displayName: Terra Plan
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    workingDirectory: $(System.DefaultWorkingDirectory)
+    environmentServiceNameAzureRM: 'ServiceConnectionName'
+- task: TerraformTaskV1@0
+  displayName: Terra Apply
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    workingDirectory: $(System.DefaultWorkingDirectory)
+    environmentServiceNameAzureRM: 'ServiceConnectionName'

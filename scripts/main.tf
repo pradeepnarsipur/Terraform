@@ -1,35 +1,37 @@
-resource "azurerm_resource_group" "pradeep_example_rg" {
-  name     = "azure-functions-test-rg"
-  location = "West Europe"
+# this line is imported so that backend connection is extablished in 
+#the pipeline
+terraform {
+    backend "azurerm" {}
 }
-
-resource "azurerm_storage_account" "pradeep_storaage_example" {
-  name                     = "functions_app_testsa_1989"
-  resource_group_name      = azurerm_resource_group.pradeep_example_rg.name
-  location                 = azurerm_resource_group.pradeep_example_rg.location
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
+# Configure the Microsoft Azure Provider
+provider "azurerm" {
+    subscription_id = "Pay-As-You-Go(acf8be16-4029-4672-bd15-7c4aa64a5a8a)"
+    skip_provider_registration = "true"
+    features {}
 }
-
-resource "azurerm_app_service_plan" "pradeep_example_app_service_plan" {
-  name                = "azure-functions-test-service-plan"
-  location            = azurerm_resource_group.pradeep_example_rg.location
-  resource_group_name = azurerm_resource_group.pradeep_example_rg.name
-
+resource "azurerm_app_service_plan" "test" {
+  name                = "azure-functions-test-service-plan-pradeep1989"
+  location            = "westeurope"
+  resource_group_name = "resource_group_name"
+  kind                = "FunctionApp"
   sku {
-    tier = "Standard"
-    size = "S1"
+    tier = "Dynamic"
+    size = "Y1"
   }
 }
-
-resource "azurerm_function_app" "example" {
-  name                       = "test-azure-functions_pradeep"
-  location                   = azurerm_resource_group.pradeep_example_rg.location
-  resource_group_name        = azurerm_resource_group.pradeep_example_rg.name
-  app_service_plan_id        = azurerm_app_service_plan.pradeep_example_app_service_plan.id
-  storage_account_name       = azurerm_storage_account.pradeep_storaage_example.name
-  storage_account_access_key = azurerm_storage_account.pradeep_storaage_example.primary_access_key
-  site_config {
-    dotnet_framework_version="v6.0"
+resource "azurerm_application_insights" "test" {
+  name                = "miel-test-terraform-insights-pradeep1989"
+  location            = "westeurope"
+  resource_group_name = "resource_group_name"
+  application_type    = "web"
+}
+resource "azurerm_function_app" "test" {
+  name                      = "miel-test-terraform-pradeep1989"
+  location                  = "westeurope"
+  resource_group_name       = "resource_group_name"
+  app_service_plan_id       = azurerm_app_service_plan.test.id
+  storage_connection_string = "storage_connection_string"
+  app_settings = {
+    APPINSIGHTS_INSTRUMENTATIONKEY = azurerm_application_insights.test.instrumentation_key
   }
 }
