@@ -6,7 +6,8 @@ variables:
   azureSubscription: 'Pay-As-You-Go(acf8be16-4029-4672-bd15-7c4aa64a5a8a)'
   appName: 'test-azure-functions_pradeep'
   # Agent VM image name
-  vmImageName: 'default'
+  #vmImageName: 'default'
+  pool: default
 
 - task: AzureFunctionApp@1 # Add this at the end of your file
   inputs:
